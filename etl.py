@@ -18,6 +18,20 @@ os.environ['AWS_SECRET_ACCESS_KEY']=config['AWS']['AWS_SECRET_ACCESS_KEY']
 
 
 """
+    This procedure creates the spark connection which is used to read data on s3 bucket and process it.
+    
+    OUTPUT:
+    * spark connection
+"""
+def create_spark_session():
+    spark = SparkSession \
+        .builder \
+        .config("spark.jars.packages","org.apache.hadoop:hadoop-aws:2.7.0")\
+        .getOrCreate()
+    return spark
+
+
+"""
     This procedure processes song files whose filepath has been provided as an arugment.
     It extracts the song information in order to store it into songs table and then stores it in parquet format.
     It also extracts the artist information in order to store it into artists table and then stores it in parquet format.
